@@ -15,7 +15,7 @@ export class LoginService {
     if (!matchPassword) throw new AppError("Invalid credentials.", 401);
 
     const token: string = sign(
-      { adimn: foundUser.admin },
+      { admin: foundUser.admin },
       process.env.SECRET_KEY!,
       {
         subject: foundUser.id,
