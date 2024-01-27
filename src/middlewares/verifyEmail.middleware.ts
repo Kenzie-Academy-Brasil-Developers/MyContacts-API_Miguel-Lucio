@@ -12,7 +12,7 @@ export const verifyEmail = async (
   if (!email) return next();
 
   const foundUser: User | null = await userRepository.findOneBy({ email });
-  if (foundUser) throw new AppError("Email already exists");
+  if (foundUser) throw new AppError("Email already exists.");
 
   return next();
 };
