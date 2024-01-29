@@ -21,6 +21,10 @@ export class UserService {
     return userListSchema.parse(users);
   }
 
+  readOne(user: User): TUserReturn {
+    return userReturnSchema.parse(user);
+  }
+
   async update(user: User, data: TUserUpdate): Promise<TUserReturn> {
     const updateUser = userRepository.create({ ...user, ...data });
     await userRepository.save(updateUser);

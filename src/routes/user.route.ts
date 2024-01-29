@@ -21,6 +21,9 @@ userRouter.get("/", verifyToken, verifyAdimn, (req: Request, res: Response) =>
 );
 
 userRouter.use("/:id", verifyToken, verifyId, verifyPermissions);
+userRouter.get("/:id", (req: Request, res: Response) =>
+  userController.readOne(req, res)
+);
 userRouter.patch(
   "/:id",
   validateBody(userUpdateSchema),
