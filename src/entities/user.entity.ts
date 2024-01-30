@@ -33,7 +33,7 @@ export class User {
   @CreateDateColumn({ type: "date" })
   registeredAt: string;
 
-  @OneToMany(() => Contact, (c) => c.user)
+  @OneToMany(() => Contact, (c) => c.user, { onDelete: "CASCADE" })
   contacts: Array<Contact>;
 
   @BeforeInsert()
