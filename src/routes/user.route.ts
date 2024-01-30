@@ -7,6 +7,7 @@ import { verifyToken } from "../middlewares/verifyToken.middleware";
 import { verifyAdimn } from "../middlewares/verifyAdmin.middleware";
 import { verifyId } from "../middlewares/verifyId.middleware";
 import { verifyPermissions } from "../middlewares/verifyPermissions.middleware";
+import { validateToken } from "../middlewares/validateToken.middleware";
 
 export const userRouter = Router();
 
@@ -16,11 +17,15 @@ userRouter.post(
   verifyEmail,
   (req: Request, res: Response) => userController.create(req, res)
 );
-userRouter.get("/", verifyToken, verifyAdimn, (req: Request, res: Response) =>
-  userController.read(req, res)
+userRouter.get(
+  "/",
+  verifyToken,
+  validateToken,
+  verifyAdimn,
+  (req: Request, res: Response) => userController.read(req, res)
 );
 
-userRouter.use("/:id", verifyToken, verifyId, verifyPermissions);
+userRouter.use("/:id", verifyToken, validateToken, verifyId, verifyPermissions);
 userRouter.get("/:id", (req: Request, res: Response) =>
   userController.readOne(req, res)
 );
