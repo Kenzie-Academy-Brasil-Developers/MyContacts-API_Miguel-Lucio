@@ -1,0 +1,226 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cadastro de contatos",
+    "description": "Api onde usuários podem cadastrar seus contatos.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development env"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "description": "Apenas usuários admin podem realizar a busca de usuários.",
+        "security": [{}],
+        "tags": ["Rotas Autenticadas"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array"
+                },
+                "examples": {
+                  "userAdminResponse": {
+                    "value": [
+                      {
+                        "id": "6ec5b207-6f0f-4caf-b2dd-b813b37f3b19",
+                        "fullName": "Admin",
+                        "email": "admin@mail.com",
+                        "admin": true,
+                        "phone": "12991111111",
+                        "registeredAt": "2024-01-29"
+                      },
+                      {
+                        "id": "7f7b5410-09e3-4618-b31d-690e2f5acbc1",
+                        "fullName": "User",
+                        "email": "user@mail.com",
+                        "admin": false,
+                        "phone": "12992222222",
+                        "registeredAt": "2024-01-29"
+                      },
+                      {
+                        "id": "3f06b169-3e6e-4f0b-abd2-9223996ac7e9",
+                        "fullName": "User1",
+                        "email": "user1@mail.com",
+                        "admin": false,
+                        "phone": "12993333333",
+                        "registeredAt": "2024-01-29"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "userCommonResponse": {
+                    "value": { "message": "Insufficient permission." }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "missingToken": {
+                    "value": { "message": "Missing bearer token." }
+                  },
+                  "invalidToken": {
+                    "value": { "message": "invalid signature" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Rota responsável por cadastrar usuários.",
+        "tags": ["Rotas Sem Parâmetros"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createUser"
+              },
+              "examples": {
+                "userAdmin": {
+                  "value": {
+                    "fullName": "Admin",
+                    "email": "admin@mail.com",
+                    "admin": true,
+                    "phone": "11991111111"
+                  }
+                },
+                "userCommon": {
+                  "value": {
+                    "fullName": "User",
+                    "email": "user@mail.com",
+                    "phone": "11992222222"
+                  }
+                }
+              }
+            }
+          },
+          "description": "O envio do campo admin não é obrigatório, contudo este campo será registrado como false."
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/returnUser"
+                },
+                "examples": {
+                  "userAdmin": {
+                    "value": {
+                      "id": "6ec5b207-6f0f-4caf-b2dd-b813b37f3b19",
+                      "fullName": "Admin",
+                      "email": "admin@mail.com",
+                      "admin": true,
+                      "phone": "11991111111",
+                      "registeredAt": "2024-01-29"
+                    }
+                  },
+                  "userCommon": {
+                    "value": {
+                      "id": "7ec5b107-6f0f-8cff-b2dd-b813b37f1486",
+                      "fullName": "User",
+                      "email": "user@mail.com",
+                      "admin": false,
+                      "phone": "11991111111",
+                      "registeredAt": "2024-01-29"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "requiredFields": {
+                    "value": {
+                      "message": {
+                        "fullName": ["Required"],
+                        "email": ["Required"],
+                        "password": ["Required"],
+                        "phone": ["Required"]
+                      }
+                    }
+                  },
+                  "emailExists": {
+                    "value": { "message": "Email already exists." }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "createUser": {
+        "type": "object",
+        "properties": {
+          "fullName": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "phone": { "type": "string" },
+          "admin": { "type": "boolean" }
+        }
+      },
+      "returnUser": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "fullName": { "type": "string" },
+          "email": { "type": "string" },
+          "admin": { "type": "boolean" },
+          "phone": { "type": "string" },
+          "registeredAt": { "type": "string" }
+        }
+      },
+      "readUsers": {
+        "type": "array",
+        "properties": {
+          "id": { "type": "string" },
+          "fullName": { "type": "string" },
+          "email": { "type": "string" },
+          "admin": { "type": "boolean" },
+          "phone": { "type": "string" },
+          "registeredAt": { "type": "string" }
+        }
+      },
+      "updateUser": {
+        "type": "object",
+        "properties": {
+          "fullName": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "phone": { "type": "string" }
+        }
+      }
+    }
+  },
+  "security": [{ "JWT": [] }]
+}
