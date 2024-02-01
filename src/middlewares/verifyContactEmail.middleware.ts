@@ -16,8 +16,6 @@ export const verifyContactEmail = async (
     where: { email, user: foundUser },
   });
 
-  console.log(contact);
-
   if (contact) throw new AppError("There is contact with this email.");
 
   return next();
