@@ -15,13 +15,13 @@ export class Contact {
   @Column({ length: 120 })
   fullName: string;
 
-  @Column({ length: 50, unique: true })
+  @Column({ length: 50 })
   email: string;
 
   @Column({ length: 20 })
   phone: string;
 
-  @CreateDateColumn({ type: 'date' })
+  @CreateDateColumn({ type: "date" })
   registeredAt: string;
 
   @ManyToOne(() => User, (u) => u.contacts)
