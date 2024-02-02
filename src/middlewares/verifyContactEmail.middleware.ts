@@ -11,7 +11,6 @@ export const verifyContactEmail = async (
   const { email } = req.body;
   if (!email) return next();
 
-  console.log(foundUser);
   const contact = await contactRepository.findOne({
     where: { email, user: foundUser },
   });
