@@ -37,7 +37,7 @@ http://localhost:3000
 
 <h1 align = center>Endpoints da aplicação</h1>
 
-<h2>/login</h2>
+<h2>Rota de Login</h2>
 
 | Método | Endpoint | Responsabilidade |
 | ------ | -------- | ---------------- |
@@ -93,7 +93,7 @@ Rota de login de usuário
 }
 ```
 
-<h2>/users</h2>
+<h2>Rotas de Usuário</h2>
 
 | Método | Endpoint   | Responsabilidade                     |
 | ------ | ---------- | ------------------------------------ |
@@ -103,7 +103,7 @@ Rota de login de usuário
 | PATCH  | /users/:id | Atualização de usuário passando o id |
 | DELETE | /users/:id | Deleção de usuário passando o id     |
 
-<h3>POST /users </h3>
+<h3>POST /users</h3>
 Rota de criação de usuário
 
 | Request                |
@@ -150,6 +150,210 @@ Rota de criação de usuário
     "password": ["Required"],
     "phone": ["Required"]
   }
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status : 400 BAD REQUEST |
+
+```json
+{
+  "message": "Email already exists."
+}
+```
+
+<h3>GET /users</h3>
+Rota de listagem de usuários
+(Apenas Usuários Admin podem acessar.)
+
+| Request            |
+| ------------------ |
+| Body: No content   |
+| Auth: Bearer Token |
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 200 OK         |
+
+```json
+[
+  {
+    "id": "4027f9da-b32c-42ad-9faf-842483156e69",
+    "fullName": "Admin",
+    "email": "admin@mail.com",
+    "admin": true,
+    "phone": "129",
+    "registeredAt": "2024-02-03"
+  },
+  {
+    "id": "4a731054-9ec0-4e07-a309-f7112118a122",
+    "fullName": "User",
+    "email": "user@mail.com",
+    "admin": false,
+    "phone": "129",
+    "registeredAt": "2024-02-03"
+  },
+  {
+    "id": "27624bef-fa0c-4345-a31b-6a379ef9e1ba",
+    "fullName": "User2",
+    "email": "user2@mail.com",
+    "admin": false,
+    "phone": "129",
+    "registeredAt": "2024-02-03"
+  }
+]
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "Missing bearer token."
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 403 FORBIDDEN  |
+
+```json
+{
+  // Rsposta de usuário não admin
+  "message": "Insufficient permission."
+}
+```
+
+<h3>GET /users/:id</h3>
+Rota de listagem de usuário pelo id
+(Apenas o usuário proprietário da conta e usuários admin podem acessar.)
+
+| Request            |
+| ------------------ |
+| Body: No content   |
+| Auth: Bearer Token |
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 200 OK         |
+
+```json
+{
+  "id": "4a731054-9ec0-4e07-a309-f7112118a122",
+  "fullName": "User",
+  "email": "user@mail.com",
+  "admin": false,
+  "phone": "129",
+  "registeredAt": "2024-02-03"
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "Missing bearer token."
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 403 FORBIDDEN  |
+
+```json
+{
+  // Rsposta de usuário não admin
+  "message": "Insufficient permission."
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 404 NOT FOUND  |
+
+```json
+{
+  "message": "User not found."
+}
+```
+
+<h3>PATCH /users/:id</h3>
+Atualização de usuário
+(Apenas o usuário proprietário da conta e usuários admin podem acessar.)
+
+| Request                |
+| ---------------------- |
+| Body: application/json |
+| Auth: Bearer Token     |
+
+```json
+{
+  "fullName": "User4",
+  "email": "user4@mail.com",
+  "phone": "12345"
+  // o campo "admin não pode ser alterado
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 200 OK         |
+
+```json
+{
+  "id": "4a731054-9ec0-4e07-a309-f7112118a122",
+  "fullName": "User4",
+  "email": "user4@mail.com",
+  "admin": false,
+  "phone": "12345",
+  "registeredAt": "2024-02-03"
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "Missing bearer token."
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 403 FORBIDDEN  |
+
+```json
+{
+  // Rsposta de usuário não admin
+  "message": "Insufficient permission."
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 404 NOT FOUND  |
+
+```json
+{
+  "message": "User not found."
 }
 ```
 
