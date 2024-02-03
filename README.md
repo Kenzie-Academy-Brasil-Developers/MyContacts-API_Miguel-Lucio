@@ -1,8 +1,8 @@
-# Lista de Contatos
+<h1 align = center>Lista de contatos</h1>
 
 Api feita com Express e TypeORM, onde usuários podem criar e gerenciar seus contatos.
 
-## Configuração do ambiente:
+<h2>Configuração do ambiente</h1>
 
 1. Dentro do diretório, abra o terminal e instale as dependências necessárias para rodar a aplicação localmente:
 
@@ -35,15 +35,65 @@ npm run dev
 Após Rodar a aplicalção a API poderá ser acessada a partir da URL:
 http://localhost:3000
 
-# Endpoints da aplicação:
+<h1 align = center>Endpoints da aplicação</h1>
 
-### **/login**
+<h2>/login</h2>
 
 | Método | Endpoint | Responsabilidade |
 | ------ | -------- | ---------------- |
 | POST   | /login   | Login de usuário |
 
-### **/users**
+<h3>POST /login</h3>
+Rota de login de usuário
+
+| Request                |
+| ---------------------- |
+| Body: application/json |
+
+```json
+{
+  "password": "1234",
+  "email": "admin@mail.com"
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 200 OK         |
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiaWF0IjoxNzA2OTgyMDc0LCJleHAiOjE3MDY5OTI4NzQsInN1YiI6IjQwMjdmOWRhLWIzMmMtNDJhZC05ZmFmLTg0MjQ4MzE1NmU2OSJ9.vfKwefIlFm_ea6Q1bJHNvjwGQyZ7gp134SH3WWpYKD4"
+}
+```
+
+| Response                |
+| ----------------------- |
+| Body: application/json  |
+| Status: 400 BAD REQUEST |
+
+```json
+{
+  "message": {
+    "email": ["Required"],
+    "password": ["Required"]
+  }
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "Invalid credentials."
+}
+```
+
+<h2>/users</h2>
 
 | Método | Endpoint   | Responsabilidade                     |
 | ------ | ---------- | ------------------------------------ |
@@ -52,6 +102,56 @@ http://localhost:3000
 | GET    | /users/:id | Listagem de usuário passando o id    |
 | PATCH  | /users/:id | Atualização de usuário passando o id |
 | DELETE | /users/:id | Deleção de usuário passando o id     |
+
+<h3>POST /users </h3>
+Rota de criação de usuário
+
+| Request                |
+| ---------------------- |
+| Body: application/json |
+
+```json
+{
+  "fullName": "Admin",
+  "password": "1234",
+  "email": "admin@mail.com",
+  "phone": "129",
+  "admin": true
+  //   o envio de "admin" não é obrigatório (default: false).
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 201 CREATED    |
+
+```json
+{
+  "id": "4027f9da-b32c-42ad-9faf-842483156e69",
+  "fullName": "Admin",
+  "email": "admin@mail.com",
+  "admin": true,
+  "phone": "129",
+  "registeredAt": "2024-02-03"
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status : 400 BAD REQUEST |
+
+```json
+{
+  "message": {
+    "fullName": ["Required"],
+    "email": ["Required"],
+    "password": ["Required"],
+    "phone": ["Required"]
+  }
+}
+```
 
 ### **/contacts**
 
