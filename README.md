@@ -357,6 +357,54 @@ Atualização de usuário
 }
 ```
 
+<h3>DELETE /users/:id</h3>
+Rota de delelção de usuário pelo id
+(Apenas o usuário proprietário da conta e usuários admin podem acessar.)
+
+| Request            |
+| ------------------ |
+| Body: No content   |
+| Auth: Bearer Token |
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 204 NO CONTENT |
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "Missing bearer token."
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 403 FORBIDDEN  |
+
+```json
+{
+  // Rsposta de usuário não admin
+  "message": "Insufficient permission."
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 404 NOT FOUND  |
+
+```json
+{
+  "message": "User not found."
+}
+```
+
 ### **/contacts**
 
 | Método | Endpoint      | Responsabilidade                     |
