@@ -93,7 +93,7 @@ Rota de login de usuário
 }
 ```
 
-<h2>Rotas de Usuário</h2>
+<h2>Rotas de Usuários</h2>
 
 | Método | Endpoint   | Responsabilidade                     |
 | ------ | ---------- | ------------------------------------ |
@@ -405,7 +405,7 @@ Rota de delelção de usuário pelo id
 }
 ```
 
-### **/contacts**
+<h2>Rotas de Contatos</h2>
 
 | Método | Endpoint      | Responsabilidade                     |
 | ------ | ------------- | ------------------------------------ |
@@ -413,3 +413,223 @@ Rota de delelção de usuário pelo id
 | GET    | /contacts     | Listagem de contatos                 |
 | PATCH  | /contacts/:id | Atualização de contato passando o id |
 | DELETE | /contacts/:id | Deleção de contato passando o id     |
+
+<h3>POST /contacts </h3>
+Rota de criação de Contato
+
+| Request                |
+| ---------------------- |
+| Body: application/json |
+| Auth: Bearer Token     |
+
+```json
+{
+  "fullName": "contact3",
+  "email": "contact3@mail.com",
+  "phone": "118"
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 201 CREATED    |
+
+```json
+{
+  "id": "efefc789-1013-43f5-bfb5-a1b0b6c0931f",
+  "fullName": "contact3",
+  "email": "contact3@mail.com",
+  "phone": "118",
+  "registeredAt": "2024-02-04"
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status : 400 BAD REQUEST |
+
+```json
+{
+  "message": {
+    "fullName": ["Required"],
+    "email": ["Required"],
+    "phone": ["Required"]
+  }
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status : 400 BAD REQUEST |
+
+```json
+{
+  "message": "There is contact with this email."
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "Missing bearer token."
+}
+```
+
+<h3>GET /contacts</h3>
+Rota de listagem de contatos
+(O usuário só possui acesso aos seus próprios contatos)
+
+| Request            |
+| ------------------ |
+| Body: No content   |
+| Auth: Bearer Token |
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 200 OK         |
+
+```json
+[
+  {
+    "id": "98516086-bb6f-4370-842f-286d84911a74",
+    "fullName": "contact",
+    "email": "contact@mail.com",
+    "phone": "129",
+    "registeredAt": "2024-02-04"
+  },
+  {
+    "id": "7b35f4dc-e812-495c-9c87-5dadabfc9c34",
+    "fullName": "contact2",
+    "email": "contact2@mail.com",
+    "phone": "118",
+    "registeredAt": "2024-02-04"
+  },
+  {
+    "id": "efefc789-1013-43f5-bfb5-a1b0b6c0931f",
+    "fullName": "contact3",
+    "email": "contact3@mail.com",
+    "phone": "118",
+    "registeredAt": "2024-02-04"
+  }
+]
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "Missing bearer token."
+}
+```
+
+<h3>PATCH /contacts/:id</h3>
+Atualização de contato
+(Apenas o usuário proprietário da conta pode executar alteração.)
+
+| Request                |
+| ---------------------- |
+| Body: application/json |
+| Auth: Bearer Token     |
+
+```json
+{
+  "fullName": "osvaldo",
+  "email": "osvaldo@mail.com",
+  "phone": "1231218"
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 200 OK         |
+
+```json
+{
+  "id": "efefc789-1013-43f5-bfb5-a1b0b6c0931f",
+  "fullName": "osvaldo",
+  "email": "osvaldo@mail.com",
+  "phone": "1231218",
+  "registeredAt": "2024-02-04"
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status : 400 BAD REQUEST |
+
+```json
+{
+  "message": "There is contact with this email."
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "Missing bearer token."
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 404 NOT FOUND  |
+
+```json
+{
+  "message": "User does not have this contact"
+}
+```
+
+<h3>DELETE /contacts/:id</h3>
+Rota de delelção de contatopelo id
+(Apenas o usuário proprietário pode acessar.)
+
+| Request            |
+| ------------------ |
+| Body: No content   |
+| Auth: Bearer Token |
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 204 NO CONTENT |
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "Missing bearer token."
+}
+```
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 404 NOT FOUND  |
+
+```json
+{
+  "message": "User does not have this contact"
+}
+```
