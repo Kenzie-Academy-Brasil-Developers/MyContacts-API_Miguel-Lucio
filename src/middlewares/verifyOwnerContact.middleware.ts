@@ -9,14 +9,20 @@ export const verifyOwnerContact = async (
 ) => {
   const { foundUser } = res.locals;
   const { id } = req.params;
+  const uuidRegex =
+    /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
 
-  const foundContact = await contactRepository.findOne({
-    where: { user: foundUser, id },
-  });
+  if (uuidRegex.test(id)) {
+    const foundContact = await contactRepository.findOne({
+      where: { user: foundUser, id },
+    });
+    if (!foundContact)
+      throw new AppError("User does not have this contact", 404);
 
-  if (!foundContact) throw new AppError("User does not have this contact", 404);
-
-  res.locals = { ...res.locals, foundContact };
+    res.locals = { ...res.locals, foundContact };
+  } else {
+    throw new AppError("User does not have this contact", 404);
+  }
 
   return next();
 };
