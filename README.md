@@ -117,6 +117,77 @@ Rota de login de usuário
 }
 ```
 
+<h2>Rota de Perfil</h2>
+
+| Método | Endpoint | Responsabilidade  |
+| ------ | -------- | ----------------- |
+| Get    | /profile | Perfil de usuário |
+
+<h3>GET /profile</h3>
+Rota de con informações do usuário
+(Rota para usuários autenticados)
+
+| Request            |
+| ------------------ |
+| Body: No content   |
+| Auth: Bearer Token |
+
+| Response               |
+| ---------------------- |
+| Body: application/json |
+| Status: 200 OK         |
+
+```json
+{
+  "user": {
+    "id": "89d18c1c-41de-4032-bbdd-e62d616466c6",
+    "fullName": "Admin",
+    "email": "admin@mail.com",
+    "admin": true,
+    "phone": "128",
+    "registeredAt": "2024-02-06",
+    "contacts": [
+      {
+        "id": "864d7436-6e43-43d4-ba0b-0b67fc1ffe6a",
+        "fullName": "contact3",
+        "email": "contact3@mail.com",
+        "phone": "118",
+        "registeredAt": "2024-02-10"
+      },
+      {
+        "id": "d0433bc4-ff69-4f0b-9a71-6b58a9473035",
+        "fullName": "contact4",
+        "email": "contact4@mail.com",
+        "phone": "118",
+        "registeredAt": "2024-02-10"
+      }
+    ]
+  }
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "Missing bearer token."
+}
+```
+
+| Response                 |
+| ------------------------ |
+| Body: application/json   |
+| Status: 401 UNAUTHORIZED |
+
+```json
+{
+  "message": "invalid signature"
+}
+```
+
 <h2>Rotas de Usuários</h2>
 
 | Método | Endpoint   | Responsabilidade                     |
