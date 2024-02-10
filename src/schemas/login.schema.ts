@@ -1,4 +1,4 @@
-import { string, z } from "zod";
+import { z } from "zod";
 import { userReturnSchema } from "./user.schema";
 import { contactListSchema } from "./contact.schema";
 
