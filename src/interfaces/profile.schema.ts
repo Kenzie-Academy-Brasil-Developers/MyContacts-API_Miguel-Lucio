@@ -1,0 +1,6 @@
+import { z } from "zod";
+import { profileReturnSchema } from "../schemas/profile.schema";
+
+type TProfileReturn = z.infer<typeof profileReturnSchema>;
+
+export { TProfileReturn };
