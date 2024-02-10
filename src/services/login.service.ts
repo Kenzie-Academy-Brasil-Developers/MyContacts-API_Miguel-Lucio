@@ -3,12 +3,16 @@ import { AppError } from "../errors/AppError.error";
 import { TLoginRequest, TLoginReturn } from "../interfaces/login.interface";
 import { userRepository } from "../repositories";
 import { sign } from "jsonwebtoken";
+import { loginReturnSchema } from "../schemas/login.schema";
 
 export class LoginService {
   async generateToken(data: TLoginRequest): Promise<TLoginReturn> {
     const { email, password } = data;
 
-    const foundUser = await userRepository.findOneBy({ email });
+    const foundUser = await userRepository.findOne({
+      where: { email },
+      relations: ["contacts"],
+    });
     if (!foundUser) throw new AppError("Invalid credentials.", 401);
 
     const matchPassword = await compare(password, foundUser.password);
@@ -23,6 +27,6 @@ export class LoginService {
       }
     );
 
-    return { token };
+    return loginReturnSchema.parse({ token, user: foundUser });
   }
 }

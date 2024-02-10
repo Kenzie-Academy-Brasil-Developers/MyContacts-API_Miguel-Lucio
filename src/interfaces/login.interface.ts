@@ -1,10 +1,8 @@
 import { z } from "zod";
-import { loginScchema } from "../schemas/login.schema";
+import { loginReturnSchema, loginScchema } from "../schemas/login.schema";
 
 type TLoginRequest = z.infer<typeof loginScchema>;
 
-type TLoginReturn = {
-  token: string;
-};
+type TLoginReturn = z.infer<typeof loginReturnSchema>;
 
 export { TLoginRequest, TLoginReturn };

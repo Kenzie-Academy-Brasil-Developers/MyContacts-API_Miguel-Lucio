@@ -64,7 +64,31 @@ Rota de login de usuário
 
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiaWF0IjoxNzA2OTgyMDc0LCJleHAiOjE3MDY5OTI4NzQsInN1YiI6IjQwMjdmOWRhLWIzMmMtNDJhZC05ZmFmLTg0MjQ4MzE1NmU2OSJ9.vfKwefIlFm_ea6Q1bJHNvjwGQyZ7gp134SH3WWpYKD4"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiaWF0IjoxNzA3NTc3NDcxLCJleHAiOjE3MDc1ODgyNzEsInN1YiI6Ijg5ZDE4YzFjLTQxZGUtNDAzMi1iYmRkLWU2MmQ2MTY0NjZjNiJ9.rONMtFlMX_rDKMSLePCeY3Ls9BPikVKTnSC3Dn6gNXI",
+  "user": {
+    "id": "89d18c1c-41de-4032-bbdd-e62d616466c6",
+    "fullName": "Admin",
+    "email": "admin@mail.com",
+    "admin": true,
+    "phone": "128",
+    "registeredAt": "2024-02-06",
+    "contacts": [
+      {
+        "id": "864d7436-6e43-43d4-ba0b-0b67fc1ffe6a",
+        "fullName": "contact3",
+        "email": "contact3@mail.com",
+        "phone": "118",
+        "registeredAt": "2024-02-10"
+      },
+      {
+        "id": "d0433bc4-ff69-4f0b-9a71-6b58a9473035",
+        "fullName": "contact4",
+        "email": "contact4@mail.com",
+        "phone": "118",
+        "registeredAt": "2024-02-10"
+      }
+    ]
+  }
 }
 ```
 
