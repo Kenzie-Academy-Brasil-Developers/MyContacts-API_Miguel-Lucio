@@ -124,7 +124,7 @@ Rota de login de usuário
 | Get    | /profile | Perfil de usuário |
 
 <h3>GET /profile</h3>
-Rota de con informações do usuário
+Rota de informações do usuário
 (Rota para usuários autenticados)
 
 | Request            |
