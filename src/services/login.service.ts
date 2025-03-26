@@ -23,7 +23,7 @@ export class LoginService {
       process.env.SECRET_KEY!,
       {
         subject: foundUser.id,
-        expiresIn: process.env.EXPIRES_IN!,
+        expiresIn: "3h",
       }
     );
 
